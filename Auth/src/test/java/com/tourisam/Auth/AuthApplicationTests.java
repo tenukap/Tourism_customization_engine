@@ -1,4 +1,4 @@
-package com.example.Auth;
+package com.tourisam.Auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
