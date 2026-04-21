@@ -1,10 +1,19 @@
 package com.tourisam.Auth.Service;
 
+import com.tourisam.Auth.Model.User;
+import com.tourisam.Auth.repository.userRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
+
+    private final userRepository userRepository;
+
+    public AuthService(userRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     public String Validation (String username ,String password, String email) {
 
@@ -30,17 +39,18 @@ public class AuthService {
     catch(Exception e){
         return "Validation not complete";
 
-
     }
 
-return  null;
+return  "OK";
     }
+    public void RegisterUser(String username, String password,String email){
+        User user = new User();
+        user.setName(username);
+        user.setPassword(password);
+        user.setEmail(email);
 
+        userRepository.save(user);
 
-
-    //password null validation
-
-
-    //password strength validation
+    }
 
 }
