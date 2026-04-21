@@ -1,16 +1,16 @@
 package com.tourisam.Auth.Service;
 
 import com.tourisam.Auth.Model.User;
-import com.tourisam.Auth.repository.userRepository;
+import com.tourisam.Auth.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
-    private final userRepository userRepository;
+    private final UserRepository userRepository;
 
-    public AuthService(userRepository userRepository) {
+    public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
