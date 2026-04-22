@@ -28,7 +28,7 @@ public class AuthController {
             String email = request.get("email");
             String password = request.get("password");
 
-            String result = authService.Validation(username,email,password);
+            String result = authService.registrationValidation(username,email,password);
 
             if(!result.equals("OK")){
                 return ResponseEntity.badRequest().body(result);
@@ -36,6 +36,15 @@ public class AuthController {
 
             authService.RegisterUser(username,password,email);
             return ResponseEntity.ok("user added sucessfully");
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity <?> login(@RequestBody Map<String,String> request){
+        String username = request.get("username");
+        String password = request.get("password");
+        String email = request.get("email");
+
 
     }
 

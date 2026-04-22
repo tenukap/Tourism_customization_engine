@@ -15,7 +15,7 @@ public class AuthService {
     }
 
 
-    public String Validation (String username ,String password, String email) {
+    public String registrationValidation (String username ,String password, String email) {
 
     try {
 
@@ -51,6 +51,34 @@ return  "OK";
 
         userRepository.save(user);
 
+    }
+
+    public String LoginVerification(User user ,String username,String password,String email){
+        try{
+            if(username.isEmpty() || email.isEmpty()){
+                return "please enter username or emnail";
+            }
+
+            if(password.isEmpty()){
+                return "please enter password";
+            }
+
+            User dbuser = userRepository.findByEmail(email);
+
+            if(dbuser==null){
+                return "user not found";
+
+            }
+
+            if(!dbuser.getEmail().equals(email)){
+                return "email does not match";
+            }
+
+        }
+        catch (Exception e){
+            return "validation Error";
+        }
+        return "OK";
     }
 
 }
