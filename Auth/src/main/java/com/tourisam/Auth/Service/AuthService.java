@@ -4,14 +4,17 @@ import com.tourisam.Auth.Model.User;
 import com.tourisam.Auth.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -46,7 +49,7 @@ return  "OK";
     public void RegisterUser(String username, String password,String email){
         User user = new User();
         user.setName(username);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
 
         userRepository.save(user);
@@ -72,6 +75,10 @@ return  "OK";
 
             if(!dbuser.getEmail().equals(email)){
                 return "email does not match";
+            }
+
+            if(!passwordEncoder.matches(password,dbuser.getPassword())){
+                return "incorrect password";
             }
 
         }
