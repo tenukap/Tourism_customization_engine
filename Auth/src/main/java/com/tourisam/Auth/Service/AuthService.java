@@ -56,7 +56,7 @@ return  "OK";
 
     }
 
-    public String LoginVerification(User user ,String username,String password,String email){
+    public String LoginVerification(String username,String password,String email){
         try{
             if(username.isEmpty() || email.isEmpty()){
                 return "please enter username or emnail";
@@ -85,7 +85,7 @@ return  "OK";
         catch (Exception e){
             return "validation Error";
         }
-        return "OK";
+        return "Login Successful";
     }
 
 }
