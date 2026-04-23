@@ -61,6 +61,7 @@ return  "OK";
     }
 
     public String LoginVerification(String password,String email){
+        User dbuser = null;
         try{
             if( email.isEmpty()){
                 return "please enter username or email";
@@ -70,7 +71,7 @@ return  "OK";
                 return "please enter password";
             }
 
-            User dbuser = userRepository.findByEmail(email);
+            dbuser = userRepository.findByEmail(email);
 
             if(dbuser==null){
                 return "user not found";
@@ -85,7 +86,7 @@ return  "OK";
         catch (Exception e){
             return "validation Error";
         }
-        String token = jwtService.generateToken(email);
+        String token = jwtService.generateToken(dbuser.getEmail());
         return token;
     }
 
