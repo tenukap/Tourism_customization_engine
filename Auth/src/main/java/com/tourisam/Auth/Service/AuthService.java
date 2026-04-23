@@ -1,20 +1,24 @@
 package com.tourisam.Auth.Service;
 
+import com.tourisam.Auth.JwtUtill;
 import com.tourisam.Auth.Model.User;
 import com.tourisam.Auth.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.tourisam.Auth.Service.JwtService;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
 
@@ -35,7 +39,7 @@ public class AuthService {
             return "password cannot be empty";
         }
 
-        if( password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*]).{8}") ){
+        if( !password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*]).{8}") ){
             return " password must meet the requirments mentioned";
         }
     }
@@ -56,10 +60,10 @@ return  "OK";
 
     }
 
-    public String LoginVerification(String username,String password,String email){
+    public String LoginVerification(String password,String email){
         try{
-            if(username.isEmpty() || email.isEmpty()){
-                return "please enter username or emnail";
+            if( email.isEmpty()){
+                return "please enter username or email";
             }
 
             if(password.isEmpty()){
@@ -73,10 +77,6 @@ return  "OK";
 
             }
 
-            if(!dbuser.getEmail().equals(email)){
-                return "email does not match";
-            }
-
             if(!passwordEncoder.matches(password,dbuser.getPassword())){
                 return "incorrect password";
             }
@@ -85,7 +85,8 @@ return  "OK";
         catch (Exception e){
             return "validation Error";
         }
-        return "Login Successful";
+        String token = jwtService.generateToken(email);
+        return token;
     }
 
 }

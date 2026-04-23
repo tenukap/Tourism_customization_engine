@@ -45,7 +45,7 @@ public class AuthController {
         String password = request.get("password");
         String email = request.get("email");
 
-        String result = authService.LoginVerification(username,password,email);
+        String result = authService.LoginVerification(password,email);
         if(!result.equals("Login Successful")){
             return ResponseEntity.badRequest().body(result);
         }
