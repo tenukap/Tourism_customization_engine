@@ -40,17 +40,21 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity <?> login(@RequestBody Map<String,String> request){
-        String username = request.get("username");
+    public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
         String password = request.get("password");
         String email = request.get("email");
 
-        String result = authService.LoginVerification(password,email);
-        if(!result.equals("Login Successful")){
+        String result = authService.LoginVerification(password, email);
+
+        if (result.equals("please enter username me or email") ||
+                result.equals("please enter password") ||
+                result.equals("user not found") ||
+                result.equals("incorrect password") ||
+                result.equals("validation Error")) {
             return ResponseEntity.badRequest().body(result);
         }
-        return ResponseEntity.ok(result);
 
+        return ResponseEntity.ok(Map.of("token", result));
     }
 
 }

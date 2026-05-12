@@ -1,12 +1,9 @@
 package com.tourisam.Auth.Service;
 
-import com.tourisam.Auth.JwtUtill;
 import com.tourisam.Auth.Model.User;
 import com.tourisam.Auth.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.tourisam.Auth.Service.JwtService;
 
 @Service
 public class AuthService {
@@ -50,14 +47,22 @@ public class AuthService {
 
 return  "OK";
     }
-    public void RegisterUser(String username, String password,String email){
-        User user = new User();
-        user.setName(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setEmail(email);
+    public String RegisterUser(String username, String password, String email){
 
-        userRepository.save(user);
+        String validation = registrationValidation(username,password,email);
 
+        if(validation.equals("OK")){
+            User user = new User();
+            user.setName(username);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setEmail(email);
+
+            userRepository.save(user);
+            return "User created";
+        }
+
+
+        return validation;
     }
 
     public String LoginVerification(String password,String email){
