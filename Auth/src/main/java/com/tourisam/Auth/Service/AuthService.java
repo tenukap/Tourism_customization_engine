@@ -36,7 +36,7 @@ public class AuthService {
             return "password cannot be empty";
         }
 
-        if( !password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*]).{8}") ){
+        if( !password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*]).{8,}$") ){
             return " password must meet the requirments mentioned";
         }
     }

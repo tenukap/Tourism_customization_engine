@@ -28,9 +28,9 @@ public class AuthController {
             String email = request.get("email");
             String password = request.get("password");
 
-            String result = authService.registrationValidation(username,email,password);
+            String result = authService.RegisterUser(username,password,email);
 
-            if(!result.equals("OK")){
+            if(!result.equals("User created")){
                 return ResponseEntity.badRequest().body(result);
             }
 

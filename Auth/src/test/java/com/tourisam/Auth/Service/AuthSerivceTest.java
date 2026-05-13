@@ -25,12 +25,12 @@ public class AuthSerivceTest {
         PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
         JwtService jwtService = Mockito.mock(JwtService.class);
 
-        when(passwordEncoder.encode(anyString())).thenReturn("11fowGetre");
+        when(passwordEncoder.encode(anyString())).thenReturn("Password@123");
 
         AuthService authService = new AuthService(userRepository,passwordEncoder,jwtService);
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
-        authService.RegisterUser("JakeP", "11fowGetre", "jake23@gmail.com");
+        authService.RegisterUser("JakeP", "Password@123", "jake23@gmail.com");
         verify(userRepository).save(userCaptor.capture());
         User user = userCaptor.getValue();
 
@@ -40,7 +40,7 @@ public class AuthSerivceTest {
 
         assertEquals("jake23@gmail.com", user.getEmail());
 
-        assertEquals("11fowGetre", user.getPassword());
+        assertEquals("Password@123", user.getPassword());
 
     }
 
