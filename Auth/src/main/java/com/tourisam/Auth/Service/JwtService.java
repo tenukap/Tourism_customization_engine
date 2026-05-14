@@ -11,15 +11,29 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-
-    private final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final String SECRET = "9dK4fLm2QxP8vN5sRt7YwH3zBc6Ea1Uf";
+    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(SECRET)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String extractEmail(String token){
+        return  Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+    }
+    public Boolean validateToken(String token){
+        try{
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        }
+        catch (Exception e){
+
+        }
+        return false;
     }
 }
