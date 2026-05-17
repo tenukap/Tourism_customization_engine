@@ -36,8 +36,8 @@ public class AuthService {
             return "password cannot be empty";
         }
 
-        if( !password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*]).{8,}$") ){
-            return " password must meet the requirments mentioned";
+        if (password.length() < 8) {
+            return "password must be at least 8 characters";
         }
     }
     catch(Exception e){
@@ -56,6 +56,7 @@ return  "OK";
             user.setName(username);
             user.setPassword(passwordEncoder.encode(password));
             user.setEmail(email);
+            user.setRole("USER");
 
             userRepository.save(user);
             return "User created";

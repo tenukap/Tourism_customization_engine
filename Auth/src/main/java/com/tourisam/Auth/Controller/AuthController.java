@@ -33,8 +33,6 @@ public class AuthController {
             if(!result.equals("User created")){
                 return ResponseEntity.badRequest().body(result);
             }
-
-            authService.RegisterUser(username,password,email);
             return ResponseEntity.ok("user added sucessfully");
 
     }
