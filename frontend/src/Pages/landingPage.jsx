@@ -4,6 +4,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay,EffectFade} from "swiper/modules";
 import 'swiper/css'
 import 'swiper/css/effect-fade';
+import {useAuth} from "../Context/AuthContext.jsx";
 
 import beach from '../assets/beach-hotel.jpg';
 import ella from '../assets/ella.jpg';
@@ -15,11 +16,12 @@ import boating from '../assets/image-1.jpg';
 
 export default function LandingPage() {
     const navigate = useNavigate();
+    const user = useAuth();
     const images = [beach,ella,italy,sigiriya,ocean,boating];
     const reviews = [
         { name: "Sarah M.", location: "Australia", stars: "⭐⭐⭐⭐⭐", review: "Absolutely incredible experience. The package was tailored perfectly to what we wanted, couldn't have asked for more." },
         { name: "Sam K.", location: "United Kingdom", stars: "⭐⭐⭐⭐⭐", review: "Booking was seamless and the customization options were unlike anything else I've tried. Highly recommend." },
-        { name: "John R.", location: "India", stars: "⭐⭐⭐⭐⭐", review: "From destination selection to the final itinerary, everything felt personal. Will definitely use again." }
+        { name: "John R.", location: "India", stars: "⭐⭐⭐⭐⭐", review: "From destination selection to the final itinerary, everything felt personal. Will definitely use again and come with my family" }
     ];
 
 
@@ -48,7 +50,7 @@ export default function LandingPage() {
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center z-10">
                     <h1 className="text-5xl font-bold text-white mb-4">Discover Your Perfect Journey</h1>
                     <p className="text-xl text-white mb-8">Customise your dream travel package to any destination</p>
-                    <button onClick={() => navigate('/packages')} className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition duration-300">
+                    <button onClick={() => navigate(user?.role === 'ADMIN'? '/admin/packages' : '/packages')} className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition duration-300">
                         Explore Packages
                     </button>
                 </div>

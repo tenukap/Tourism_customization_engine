@@ -14,8 +14,8 @@ import {useAuth} from "../Context/AuthContext.jsx";
 
     }
     if (requiredRole && user.role !== requiredRole )
-        return <Navigate to '/' replace />
-    
+        return <Navigate to ='/' replace />
+
     return children
 }
 export default ProtectedRoute

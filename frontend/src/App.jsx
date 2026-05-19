@@ -3,7 +3,9 @@ import LandingPage    from './Pages/landingPage'
 import LoginPage      from './Pages/LoginPage'
 import PackagePage    from './Pages/PackagePage'
 import ProfilePage    from './Pages/ProfilePage'
+import AdminPackages from './Pages/AdminPackages'
 import ProtectedRoute from './Components/ProtectedRoute'
+
 
 function App() {
   return (
@@ -22,9 +24,9 @@ function App() {
           <ProtectedRoute><ProfilePage /></ProtectedRoute>
         } />
 
-        <Route path "/admin/packages" element={
-          <ProtectedRoute requiredRole={"ADMIN"}>AdminPackages</ProtectedRoute>
-        }/>
+        <Route path="/admin/packages" element={
+          <ProtectedRoute requiredRole="ADMIN"><AdminPackages /></ProtectedRoute>
+        } />
 
       </Routes>
     </BrowserRouter>

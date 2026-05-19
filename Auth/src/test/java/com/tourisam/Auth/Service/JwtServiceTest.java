@@ -9,15 +9,16 @@ public class JwtServiceTest {
     public void generateToken_ShouldNotBeNullTest()
     {
         String email = "franks@gmail.com";
-        String token = jwtService.generateToken(email);
+        String role = "USER";
+        String token = jwtService.generateToken(email,role);
 
         assertNotNull(token);
     }
 
     @Test
     public void generateToken_ShouldGenerateTwoTokens(){
-        String email1 = jwtService.generateToken("hans@gmail.com");
-        String email2 = jwtService.generateToken("jenny39@gmail.com");
+        String email1 = jwtService.generateToken("hans@gmail.com","USER");
+        String email2 = jwtService.generateToken("jenny39@gmail.com" ,"USER");
 
         assertNotEquals(email1,email2);
     }

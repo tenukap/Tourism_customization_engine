@@ -61,7 +61,7 @@ public class AuthSerivceTest {
 
 
         when(userRepository.findByEmail("jake23@gmail.com")).thenReturn(mockUser);
-        when(jwtService.generateToken("jake23@gmail.com")).thenReturn("mock-token");
+        when(jwtService.generateToken("jake23@gmail.com", "USER")).thenReturn("mock-token");
 
         String result = authService.LoginVerification("11fowGentre", "jake23@gmail.com");
 

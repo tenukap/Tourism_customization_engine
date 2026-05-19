@@ -28,8 +28,8 @@ export default function LoginPage() {
                 // Login flow
                 const data = await Login(email, password)
                 login(data.token)
-                if(data.role == "Admin"){
-                    navigate('admin/packages')
+                if(data.role == "ADMIN"){
+                    navigate('/admin/packages')
                 }
                 else {
                     navigate('/packages')
