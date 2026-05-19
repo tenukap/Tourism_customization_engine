@@ -92,7 +92,8 @@ return  "OK";
         catch (Exception e){
             return "validation Error";
         }
-        String token = jwtService.generateToken(email);
+        String role = dbuser.getRole();
+        String token = jwtService.generateToken(email , role);
         return token;
     }
 

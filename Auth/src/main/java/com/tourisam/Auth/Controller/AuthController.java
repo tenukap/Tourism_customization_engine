@@ -2,6 +2,7 @@ package com.tourisam.Auth.Controller;
 
 import com.tourisam.Auth.Model.User;
 import com.tourisam.Auth.Service.AuthService;
+import com.tourisam.Auth.Service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,11 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService,  JwtService jwtService) {
         this.authService = authService;
+        this.jwtService = jwtService;
     }
 
     //register endpoint
@@ -33,7 +36,7 @@ public class AuthController {
             if(!result.equals("User created")){
                 return ResponseEntity.badRequest().body(result);
             }
-            return ResponseEntity.ok("user added sucessfully");
+            return ResponseEntity.ok("user added successfully");
 
     }
 
@@ -51,8 +54,8 @@ public class AuthController {
                 result.equals("validation Error")) {
             return ResponseEntity.badRequest().body(result);
         }
-
-        return ResponseEntity.ok(Map.of("token", result));
+        String role = jwtService.extractRole(result);
+        return ResponseEntity.ok(Map.of("token", result, "role", role));
     }
 
 }
