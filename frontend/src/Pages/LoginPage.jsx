@@ -28,7 +28,12 @@ export default function LoginPage() {
                 // Login flow
                 const data = await Login(email, password)
                 login(data.token)
-                navigate('/packages')
+                if(data.role == "Admin"){
+                    navigate('admin/packages')
+                }
+                else {
+                    navigate('/packages')
+                }
             } else {
                 // Register flow
                 const msg = await registerUser(name, email, password)

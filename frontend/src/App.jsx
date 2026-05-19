@@ -22,6 +22,10 @@ function App() {
           <ProtectedRoute><ProfilePage /></ProtectedRoute>
         } />
 
+        <Route path "/admin/packages" element={
+          <ProtectedRoute requiredRole={"ADMIN"}>AdminPackages</ProtectedRoute>
+        }/>
+
       </Routes>
     </BrowserRouter>
   )
