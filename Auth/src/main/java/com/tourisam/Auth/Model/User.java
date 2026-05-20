@@ -34,6 +34,9 @@ public class User{
     @Column(name = "createdAt")
     private java.time.LocalDateTime createdAt;
 
+    @Column(nullable = true)
+    private String avatarUrl;
+
     @PrePersist
     protected void onCreate(){
         createdAt = java.time.LocalDateTime.now();

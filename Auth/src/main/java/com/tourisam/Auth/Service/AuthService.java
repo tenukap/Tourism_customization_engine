@@ -5,6 +5,8 @@ import com.tourisam.Auth.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -77,7 +79,12 @@ return  "OK";
                 return "please enter password";
             }
 
-            dbuser = userRepository.findByEmail(email);
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+
+            if(optionalUser.isEmpty()){
+                return "user not found";
+            }
+            dbuser = optionalUser.get();
 
             if(dbuser==null){
                 return "user not found";
