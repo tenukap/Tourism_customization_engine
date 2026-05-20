@@ -1,4 +1,4 @@
-package com.travelus.packagemanagement.config;
+package com.tourisam.project.config;
 
 import com.travelus.packagemanagement.model.TourPackage;
 import com.travelus.packagemanagement.repository.PackageRepository;
