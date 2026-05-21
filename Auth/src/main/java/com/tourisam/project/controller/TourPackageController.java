@@ -1,7 +1,7 @@
 package com.tourisam.project.controller;
 
 import com.tourisam.project.model.TourPackage;
-import com.tourisam.project.service.TourPackageService;
+import com.tourisam.project.service.PackageServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class TourPackageController {
 
-    private final TourPackageService service;
+    private final PackageServiceImpl service;
 
-    public TourPackageController(TourPackageService service) {
+    public TourPackageController(PackageServiceImpl service) {
         this.service = service;
     }
 

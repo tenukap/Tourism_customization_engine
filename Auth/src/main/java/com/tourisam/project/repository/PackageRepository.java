@@ -1,6 +1,6 @@
 package com.tourisam.project.repository;
 
-import com.travelus.packagemanagement.model.TourPackage;
+import com.tourisam.project.model.TourPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

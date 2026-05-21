@@ -1,7 +1,7 @@
 package com.tourisam.project.config;
 
-import com.travelus.packagemanagement.model.TourPackage;
-import com.travelus.packagemanagement.repository.PackageRepository;
+import com.tourisam.project.model.TourPackage;
+import com.tourisam.project.repository.PackageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
