@@ -2,17 +2,17 @@ package com.tourisam.bookingsystem.model;
 
 import java.time.LocalDate;
 
-// DTO — what the React form sends to the backend
+// DTO — exactly what the React form sends to the backend
 public class BookingRequest {
 
-    private Long packageId;
+    private String packageId; // Changed to String to capture frontend selection safely
     private LocalDate travelDate;
     private int groupSize;
     private double totalPrice;
 
     // Getters & Setters
-    public Long getPackageId() { return packageId; }
-    public void setPackageId(Long packageId) { this.packageId = packageId; }
+    public String getPackageId() { return packageId; }
+    public void setPackageId(String packageId) { this.packageId = packageId; }
 
     public LocalDate getTravelDate() { return travelDate; }
     public void setTravelDate(LocalDate travelDate) { this.travelDate = travelDate; }
