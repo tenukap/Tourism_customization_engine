@@ -17,20 +17,26 @@ export default function NavBar() {
                 <button
                     onClick={() => navigate('/packages')}
                     className={`text-sm font-semibold transition duration-300 ${
-                        location.pathname === '/packages' ? 'text-orange-400' : 'text-white hover:text-orange-400'
+                        location.pathname === '/packages'
+                            ? 'text-orange-400'
+                            : 'text-white hover:text-orange-400'
                     }`}
                 >
                     Packages
                 </button>
 
+                {/*
                 <button
                     onClick={() => navigate('/admin/packages')}
                     className={`text-sm font-semibold transition duration-300 ${
-                        location.pathname === '/admin/packages' ? 'text-orange-400' : 'text-white hover:text-orange-400'
+                        location.pathname === '/admin/packages'
+                            ? 'text-orange-400'
+                            : 'text-white hover:text-orange-400'
                     }`}
                 >
                     Admin
                 </button>
+                */}
 
                 <button
                     onClick={() => window.location.href = 'http://localhost:5173'}
