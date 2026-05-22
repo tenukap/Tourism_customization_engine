@@ -18,43 +18,52 @@ export default function NavBar() {
                 TravelUs
             </div>
 
-            {/* Auth */}
-            <div className="relative">
-                {user ? (
-                    <div>
-                        <button
-                            onClick={() => setDropdownOpen(!dropdownOpen)}
-                            className="w-10 h-10 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center hover:bg-orange-600 transition duration-300"
-                        >
-                            {user.sub.charAt(0).toUpperCase()}
-                        </button>
+        {/* Nav Links */}
+<div className="flex items-center gap-4">
+    <button
+        onClick={() => navigate('/packages')}
+        className="text-sm font-semibold transition duration-300 text-white hover:text-orange-400"
+    >
+        Packages
+    </button>
 
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg py-2 z-30">
-                                <button
-                                    onClick={() => navigate('/profile')}
-                                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
-                                >
-                                    Profile
-                                </button>
-                                <button
-                                    onClick={() => { logout(); navigate('/'); }}
-                                    className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100 transition"
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        )}
+    {/* Auth */}
+    <div className="relative">
+        {user ? (
+            <div>
+                <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="w-10 h-10 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center hover:bg-orange-600 transition duration-300"
+                >
+                    {user.sub.charAt(0).toUpperCase()}
+                </button>
+                {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg py-2 z-30">
+                        <button
+                            onClick={() => navigate('/profile')}
+                            className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+                        >
+                            Profile
+                        </button>
+                        <button
+                            onClick={() => { logout(); navigate('/'); }}
+                            className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100 transition"
+                        >
+                            Logout
+                        </button>
                     </div>
-                ) : (
-                    <button
-                        onClick={() => navigate('/login')}
-                        className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition duration-300"
-                    >
-                        Sign In
-                    </button>
                 )}
             </div>
+        ) : (
+            <button
+                onClick={() => navigate('/login')}
+                className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition duration-300"
+            >
+                Sign In
+            </button>
+        )}
+    </div>
+</div>
         </nav>
     )
 }

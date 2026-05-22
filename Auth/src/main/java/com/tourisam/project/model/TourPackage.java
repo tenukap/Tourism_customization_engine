@@ -1,98 +1,71 @@
 package com.tourisam.project.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
+@Slf4j
 @Entity
 @Table(name = "tour_packages")
-public class TourPackage {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TourPackage extends PackageBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @NotBlank(message = "Destination is required")
+    @Column(nullable = false)
     private String destination;
+
+    @NotBlank(message = "Category is required")
+    @Column(nullable = false)
     private String category;
-    private double price;
-    private int duration;
-    private int availableSlots;
 
-    public TourPackage() {
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
+    @Column(name = "created_by")
+    private Long createdBy;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    //overrides abstract method from PackageBase(po)
+    @Override
+    public String getPackageType() {
+        if (category == null) return "Standard Package";
+        return switch (category.toLowerCase()) {
+            case "adventure" -> "Adventure Package";
+            case "luxury"    -> "Luxury Package";
+            case "beach"     -> "Beach Package";
+            case "cultural"  -> "Cultural Package";
+            case "wildlife"  -> "Wildlife Package";
+            default          -> "Standard Package";
+        };
     }
 
-    public TourPackage(Long id, String name, String destination, String category, double price, int duration, int availableSlots) {
-        this.id = id;
-        this.name = name;
-        this.destination = destination;
-        this.category = category;
-        this.price = price;
-        this.duration = duration;
-        this.availableSlots = availableSlots;
+    //standard package(po)
+    @Override
+    public double calculateFinalPrice() {
+        return getBasePrice();
     }
 
-    public Long getId() {
-        return id;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getAvailableSlots() {
-        return availableSlots;
-    }
-
-    public void setAvailableSlots(int availableSlots) {
-        this.availableSlots = availableSlots;
-    }
-
-    public String getAvailabilityStatus() {
-        if (availableSlots == 0) {
-            return "Fully Booked";
-        } else if (availableSlots <= 5) {
-            return "Limited Slots";
-        } else {
-            return "Available";
-        }
+    @PostPersist
+    protected void afterCreate() {
+        log.info("Tour Package created with ID: " + id);
     }
 }
