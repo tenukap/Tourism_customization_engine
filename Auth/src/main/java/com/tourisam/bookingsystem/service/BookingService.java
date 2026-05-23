@@ -13,7 +13,6 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    // Helper method to convert text-based package IDs to Long safely
     private Long convertPackageIdToLong(String textId) {
         if (textId == null) return 1L;
         return switch (textId.toLowerCase()) {
@@ -25,24 +24,33 @@ public class BookingService {
                 try {
                     yield Long.parseLong(textId);
                 } catch (NumberFormatException e) {
-                    yield 100L; // Fallback mock identifier
+                    yield 100L;
                 }
             }
         };
     }
 
+    public Booking updateBooking(Long id, int g, int n, String dest) {
+        Booking b = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        int price = g * n * 50;
+        if (price < b.getTotalPrice()) {
+            throw new IllegalStateException("Insufficient amount");
+        }
+        b.setGroupSize(g);
+        b.setTotalPrice(price);
+        b.setPackageId(convertPackageIdToLong(dest));
+        return bookingRepository.save(b);
+    }
+
     public Booking createBooking(BookingRequest request, Long userId) {
         Booking booking = new Booking();
         booking.setUserId(userId);
-
-        // 🔥 FIXES THE INCOMPATIBLE TYPES ERROR: Convert String to Long safely
         booking.setPackageId(convertPackageIdToLong(request.getPackageId()));
-
         booking.setTravelDate(request.getTravelDate());
         booking.setGroupSize(request.getGroupSize());
         booking.setTotalPrice(request.getTotalPrice());
         booking.setStatus(Booking.BookingStatus.PENDING);
-
         return bookingRepository.save(booking);
     }
 
@@ -51,23 +59,23 @@ public class BookingService {
     }
 
     public Booking confirmBooking(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
-        booking.setStatus(Booking.BookingStatus.CONFIRMED);
-        return bookingRepository.save(booking);
+        Booking b = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        b.setStatus(Booking.BookingStatus.CONFIRMED);
+        return bookingRepository.save(b);
     }
 
     public Booking cancelBooking(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
-        booking.setStatus(Booking.BookingStatus.CANCELLED);
-        return bookingRepository.save(booking);
+        Booking b = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        b.setStatus(Booking.BookingStatus.CANCELLED);
+        return bookingRepository.save(b);
     }
 
     public Booking simulatePayment(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
-        booking.setStatus(Booking.BookingStatus.PAID);
-        return bookingRepository.save(booking);
+        Booking b = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+        b.setStatus(Booking.BookingStatus.PAID);
+        return bookingRepository.save(b);
     }
 }
